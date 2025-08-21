@@ -1,6 +1,8 @@
+from pytesseract.pytesseract import string
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
-import pytesseract, re
+import pytesseract
+import re
 from PIL import Image
 
 TOKEN = "8287530957:AAHtB42XbsqNCzRs8VpxnXPlVxGj1iDTwG4"
@@ -12,10 +14,10 @@ used_transactions = set()
 # --- /start command ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[
-        InlineKeyboardButton("Yes", callback_data="yes_topup"),
+        InlineKeyboardButton("Diamond Price 💎", callback_data="yes_topup"),
     ]]
     await update.message.reply_text(
-        "MLBB Topup Bot ✅\nMLBB Diamond ဝယ်ချင်ပါသလား?",
+        "Welcome to the TOPZONE \nMLBB Diamond Top-up Bot!",
         reply_markup=InlineKeyboardMarkup(keyboard))
 
 
@@ -26,39 +28,140 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = query.from_user.id
 
     if query.data == "yes_topup":
-        await context.bot.send_message(
-            chat_id=user_id,
-            text=
-            "Dia 11 - 900 Ks\nDia 22 - 1600 Ks\nDia 56 - 3900 Ks\nDia 112 - 7700 Ks\nDia 86 - 5100 Ks\nDia 172 - 10000 Ks\nDia 257 - 14500 Ks\nDia 343 - 19500 Ks\nDia 429 - 24400 Ks\nDia 514 - 28900 Ks\nDia 600 - 33900 Ks\nDia 706 - 39000 Ks"
-        )
-    elif query.data == "buy":
+        # Diamond price list inline buttons
+        keyboard = [[
+            InlineKeyboardButton("Wp - 6200", callback_data="Wp"),
+            InlineKeyboardButton("Twilight - 32800", callback_data="Twilight")
+        ],
+                    [
+                        InlineKeyboardButton("11 - 900", callback_data="11"),
+                        InlineKeyboardButton("22 - 1600", callback_data="22")
+                    ],
+                    [
+                        InlineKeyboardButton("56 - 3900", callback_data="56"),
+                        InlineKeyboardButton("112 - 7700", callback_data="112")
+                    ],
+                    [
+                        InlineKeyboardButton("86 - 5100", callback_data="86"),
+                        InlineKeyboardButton("172 - 10000",
+                                             callback_data="172")
+                    ],
+                    [
+                        InlineKeyboardButton("257 - 14500",
+                                             callback_data="257"),
+                        InlineKeyboardButton("343 - 19500",
+                                             callback_data="343")
+                    ],
+                    [
+                        InlineKeyboardButton("429 - 24400",
+                                             callback_data="429"),
+                        InlineKeyboardButton("514 - 28900",
+                                             callback_data="514")
+                    ],
+                    [
+                        InlineKeyboardButton("600 - 33900",
+                                             callback_data="600"),
+                        InlineKeyboardButton("706 - 39000",
+                                             callback_data="706")
+                    ],
+                    [
+                        InlineKeyboardButton("792 - 33900",
+                                             callback_data="792"),
+                        InlineKeyboardButton("878 - 39000",
+                                             callback_data="878")
+                    ],
+                    [
+                        InlineKeyboardButton("963 - 33900",
+                                             callback_data="963"),
+                        InlineKeyboardButton("1049 - 39000",
+                                             callback_data="1049")
+                    ],
+                    [
+                        InlineKeyboardButton("1412 - 33900",
+                                             callback_data="1412"),
+                        InlineKeyboardButton("2195 - 39000",
+                                             callback_data="2195")
+                    ],
+                    [
+                        InlineKeyboardButton("2195 - 33900",
+                                             callback_data="2195"),
+                        InlineKeyboardButton("3688 - 39000",
+                                             callback_data="3688")
+                    ],
+                    [
+                        InlineKeyboardButton("5532 - 33900",
+                                             callback_data="5534"),
+                        InlineKeyboardButton("9288 - 39000",
+                                             callback_data="9288")
+                    ],
+                    [
+                        InlineKeyboardButton("50+50 - 3200",
+                                             callback_data="50+50"),
+                        InlineKeyboardButton("150+150 - 9600",
+                                             callback_data="150+150")
+                    ],
+                    [
+                        InlineKeyboardButton("250+250 - 15300",
+                                             callback_data="250+250"),
+                        InlineKeyboardButton("500+500 - 31300",
+                                             callback_data="500+500")
+                    ]]
         await query.edit_message_text(
-            "KBZ/Wave/UAB/AYA Pay နဲ့ ငွေလွှဲကာပြေစာ ပို့ပါ")
-    elif query.data == "cancel":
-        orders.pop(user_id, None)
-        await query.edit_message_text("🛑 အမှာစာကို ရပ်တန့်လိုက်ပါ")
+            "💎 Diamond Price List",
+            reply_markup=InlineKeyboardMarkup(keyboard))
 
-
-# --- Handle topup choice ---
-async def handle_choice(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    choice = update.message.text.strip()
-    user_id = update.effective_user.id
-    if choice in ["11","22","56","112","86","172","257","343","429","514","600","706"]:
-        price_map = {"11": 900, "22": 1600, "56": 3900 , "112": 7700, "86": 5100, "172":10000, "257": 14500, "343": 19500, "429": 24400, "514": 28900, "600":33900, "706": 39000}
+    elif query.data in [
+            "Wp", "Twilight", "11", "22", "56", "112", "86", "172", "257",
+            "343", "429", "514", "600", "706", "792", "878", "963", "1049",
+            "1412", "2195", "3688", "5534", "9288", "50+50", "150+150",
+            "250+250", "500+500"
+    ]:
+        # User selects a diamond package
+        price_map = {
+            "Wp": "6200",
+            "Twilight": "32800",
+            "11": "900",
+            "22": "1600",
+            "56": "3900",
+            "112": "7700",
+            "86": "5100",
+            "172": "10000",
+            "257": "14500",
+            "343": "19500",
+            "429": "24400",
+            "514": "28900",
+            "600": "33900",
+            "706": "39000",
+            "792": "44100",
+            "878": "49000",
+            "963": "53500",
+            "1049": "58500",
+            "1412": "78000",
+            "2195": "118100",
+            "3688": "197000",
+            "5532": "297400",
+            "9288": "493900",
+            "50+50": "3200",
+            "150+150": "9600",
+            "250+250": "15300",
+            "500+500": "31300"
+        }
         orders[user_id] = {
-            "item": int(choice),
-            "price": price_map[choice],
+            "item": str(query.data),
+            "price": price_map[query.data],
             "paid": False,
             "slip": None,
             "txid": None
         }
-        keyboard = [[
-            InlineKeyboardButton("✅ Buy", callback_data="buy"),
-            InlineKeyboardButton("❌ Cancel", callback_data="cancel")
-        ]]
-        await update.message.reply_text(
-            f"သင် ငွေပေးချေရမဲ့ ပမာဏ - {price_map[choice]} ကျပ်\n Payment Number - 09950574646",
-            reply_markup=InlineKeyboardMarkup(keyboard))
+        # Ask user to send payment slip
+        await query.edit_message_text(
+            f"💰 သင်ပေးချေရမဲ့ ပမာဏ - {price_map[query.data]} Ks\n"
+            f"📲 Payment Number - 09950574646\n\n"
+            "⚠️ ငွေလွှဲပြီးပြေစာပို့ပေးပါ")
+
+    elif query.data == "cancel":
+        orders.pop(user_id, None)
+        await query.edit_message_text("🛑 အမှာစာကို ရပ်တန့်လိုက်ပါ")
 
 
 # --- Handle payment slip photo ---
@@ -69,14 +172,14 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if orders[user_id].get("paid"):
         await update.message.reply_text(
-            "⚠️ သင့် ငွေလွှဲပြေစာကို ပို့ပြီးသားဖြစ်ပါတယ်")
+            "⚠️ သင့် ငွေလွှဲပြေစာကို ပို့ပြီးသားဖြစ်ပါတယ်"
+        )
         return
 
+    # Download photo
     file = await update.message.photo[-1].get_file()
     file_path = f"slip_{user_id}.jpg"
     await file.download_to_drive(file_path)
-
-    # Keep slip file_id
     orders[user_id]["slip"] = update.message.photo[-1].file_id
 
     # OCR read
@@ -87,23 +190,29 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     txid = txid_match.group(0) if txid_match else None
     orders[user_id]["txid"] = txid
 
-    # Check if already used
     if txid and txid in used_transactions:
         await update.message.reply_text(
-            "❌ ဤငွေလွှဲပြေစာကို အသုံးပြုပြီးသားဖြစ်သည်")
+            "❌ ဤငွေလွှဲပြေစာကို အသုံးပြုပြီးသားဖြစ်သည်"
+        )
         return
 
-    # Check payment amount
+    # Check payment amount using digits only
     price = str(orders[user_id]["price"])
-    if price in text:
-        await update.message.reply_text(
-            "✅ ငွေလွှဲမှုအောင်မြင်ပါသည်\nGame ID + Server ပေးပါ\n(ဥပမာ: 570780169 8270)"
-        )
-        orders[user_id]["paid"] = True
-        if txid:
-            used_transactions.add(txid)
+
+        # OCR မှာထွက်လာတဲ့ text မှာ comma, space, Ks, MMK ဖယ်ရှားပြီး digit-only string
+    cleaned_text = re.sub(r"[^\d]", "", text)
+
+    if price == cleaned_text or price in cleaned_text:
+            await update.message.reply_text(
+                "✅ ငွေလွှဲမှုအောင်မြင်ပါသည်\nGame ID + Server ပေးပါ\n(ဥပမာ: 570780169 8270)"
+            )
+            orders[user_id]["paid"] = True
+            if txid:
+                used_transactions.add(txid)
     else:
-        await update.message.reply_text("ငွေပမာဏမမှန်ပါ")
+            await update.message.reply_text("❌ ငွေပမာဏမမှန်ပါ")
+
+
 
 
 # --- Handle GameID + Server ---
@@ -140,8 +249,6 @@ def main():
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button))
-    app.add_handler(
-        MessageHandler(filters.Regex("^(11|12|13)$"), handle_choice))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_id))
 
