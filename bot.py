@@ -1,4 +1,4 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Bot
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 import pytesseract
 import re
@@ -118,11 +118,9 @@ def webhook():
     asyncio.run(bot_app.update_queue.put(update))
     return Response("ok", status=200)
 
-# Set webhook on startup
 @app.before_first_request
 def set_webhook():
-    bot = Bot(TOKEN)
-    bot.set_webhook(WEBHOOK_URL)
+    asyncio.run(bot_app.bot.set_webhook(WEBHOOK_URL))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
