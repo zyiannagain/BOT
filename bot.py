@@ -105,7 +105,7 @@ async def handle_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
         orders.pop(user_id, None)
 
 # --- Flask Webhook Server ---
-flask_app = Flask(__name__)
+app = Flask(__name__)
 bot_app = Application.builder().token(TOKEN).build()
 
 bot_app.add_handler(CommandHandler("start", start))
