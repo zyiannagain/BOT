@@ -9,7 +9,7 @@ import asyncio
 
 TOKEN = "8168270944:AAGi56x3BpWZziLStohHjGL0N5xWnoTQOIA"
 WEBHOOK_PATH = f"/webhook/{TOKEN}"
-WEBHOOK_URL = f"https://topzone-diamond-bot.onrender.com{WEBHOOK_PATH}"
+WEBHOOK_URL = f"https://yourapp.onrender.com{WEBHOOK_PATH}"
 
 orders = {}
 used_transactions = set()
@@ -105,7 +105,7 @@ async def handle_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
         orders.pop(user_id, None)
 
 # --- Flask Webhook Server ---
-app = Flask(__name__)
+flask_app = Flask(__name__)
 bot_app = Application.builder().token(TOKEN).build()
 
 bot_app.add_handler(CommandHandler("start", start))
