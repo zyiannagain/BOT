@@ -43,7 +43,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_choice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     choice = update.message.text.strip()
     user_id = update.effective_user.id
-    if choice in ["11", "22", "56","112","86","172","257","343","429","514","600","706"]:
+    if choice in ["11","22","56","112","86","172","257","343","429","514","600","706"]:
         price_map = {"11": 900, "22": 1600, "56": 3900 , "112": 7700, "86": 5100, "172":10000, "257": 14500, "343": 19500, "429": 24400, "514": 28900, "600":33900, "706": 39000}
         orders[user_id] = {
             "item": int(choice),
