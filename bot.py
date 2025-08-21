@@ -9,7 +9,7 @@ import asyncio
 
 TOKEN = "8168270944:AAGi56x3BpWZziLStohHjGL0N5xWnoTQOIA"
 WEBHOOK_PATH = f"/webhook/{TOKEN}"
-WEBHOOK_URL = f"https://yourapp.onrender.com{WEBHOOK_PATH}"
+WEBHOOK_URL = f"https://topzone-diamond-bot.onrender.com{WEBHOOK_PATH}"
 
 orders = {}
 used_transactions = set()
