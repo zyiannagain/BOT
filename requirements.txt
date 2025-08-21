@@ -1,4 +1,4 @@
 python-telegram-bot==20.7
 Flask==2.3.3
-Pillow==9.5.0
-pytesseract==0.3.10  # OCR လိုရင် uncomment
+#Pillow==9.5.0
+#pytesseract==0.3.10  # OCR လိုရင် uncomment
