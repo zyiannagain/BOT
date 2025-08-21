@@ -115,12 +115,12 @@ bot_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_id))
 def webhook():
     data = request.get_json(force=True)
     update = Update.de_json(data, bot_app.bot)
-    asyncio.run(bot_app.update_queue.put(update))
+    asyncio.create_task(bot_app.update_queue.put(update))
     return Response("ok", status=200)
 
 @app.before_first_request
 def set_webhook():
-    asyncio.run(bot_app.bot.set_webhook(WEBHOOK_URL))
+    asyncio.create_task(bot_app.bot.set_webhook(WEBHOOK_URL))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
