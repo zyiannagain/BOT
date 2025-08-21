@@ -4,9 +4,24 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 import pytesseract
 import re
 from PIL import Image
+from flask import Flask
+import threading
+
+# Flask app
+app = Flask(__name__)
 
 # Tesseract command path (Linux/Docker)
 pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
+
+def run_telegram_bot():
+    run_bot()  # ဒီဟာ မင်းရဲ့ Telegram bot polling function
+
+# Start bot in a separate thread
+threading.Thread(target=run_telegram_bot).start()
+
+@app.route('/')
+def home():
+    return "Bot is running 24/7!"
 
 TOKEN = "8287530957:AAHtB42XbsqNCzRs8VpxnXPlVxGj1iDTwG4"
 
@@ -258,5 +273,13 @@ def main():
     app.run_polling()
 
 
+    
+
+
 if __name__ == "__main__":
+    # Start Flask server
+    app.run(host="0.0.0.0", port=5000)
+
     main()
+   
+
