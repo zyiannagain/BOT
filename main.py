@@ -5,6 +5,9 @@ import pytesseract
 import re
 from PIL import Image
 
+# Tesseract command path (Linux/Docker)
+pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
+
 TOKEN = "8287530957:AAHtB42XbsqNCzRs8VpxnXPlVxGj1iDTwG4"
 
 orders = {}
