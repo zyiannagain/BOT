@@ -15,7 +15,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         InlineKeyboardButton("Yes", callback_data="yes_topup"),
     ]]
     await update.message.reply_text(
-        "MLBB Topup Bot ✅\nသင် MLBB Diamond ဝယ်ချင်ပါသလား?",
+        "MLBB Topup Bot ✅\nMLBB Diamond ဝယ်ချင်ပါသလား?",
         reply_markup=InlineKeyboardMarkup(keyboard))
 
 
