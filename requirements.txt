@@ -1,7 +1,6 @@
-python-telegram-bot==20.3
-Flask==2.3.3
-Pillow==9.6.0
-pytesseract==0.3.10
+Flask
+python-telegram-bot
+requests
 gunicorn
-
-
+pytesseract
+Pillow   # pytesseract အတွက် image handle လိုပါတယ်
