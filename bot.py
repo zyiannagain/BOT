@@ -1,4 +1,3 @@
-from pytesseract.pytesseract import string
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Bot
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 import pytesseract
@@ -28,7 +27,6 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = query.from_user.id
 
     if query.data == "yes_topup":
-        # Diamond price inline buttons
         keyboard = [[InlineKeyboardButton("Wp - 6200", callback_data="Wp"),
                      InlineKeyboardButton("Twilight - 32800", callback_data="Twilight")]]
         await query.edit_message_text("💎 Diamond Price List", reply_markup=InlineKeyboardMarkup(keyboard))
@@ -113,7 +111,7 @@ bot_app.add_handler(CallbackQueryHandler(button))
 bot_app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
 bot_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_id))
 
-@flask_app.route(WEBHOOK_PATH, methods=["POST"])
+@app.route(WEBHOOK_PATH, methods=["POST"])
 def webhook():
     data = request.get_json(force=True)
     update = Update.de_json(data, bot_app.bot)
@@ -127,4 +125,4 @@ def set_webhook():
     bot.set_webhook(WEBHOOK_URL)
 
 if __name__ == "__main__":
-    flask_app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000)
